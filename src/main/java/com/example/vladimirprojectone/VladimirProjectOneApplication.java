@@ -18,12 +18,12 @@ public class VladimirProjectOneApplication {
 
     @GetMapping("/hello")
     public List<String> hello() {
-        List<String> x = new ArrayList<>();
+        List<String> list = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
-            x.add("Hello");
+            list.add("Hello");
         }
-        return x;
+        return list;
     }
 @GetMapping("/test")
     public String test(){
