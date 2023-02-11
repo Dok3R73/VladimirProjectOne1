@@ -25,9 +25,9 @@ public class VladimirProjectOneApplication {
         }
         return list;
     }
-@GetMapping("/test")
-    public String test(){
+
+    @GetMapping("/test")
+    public String test() {
         return "Test method";
     }
-
 }
