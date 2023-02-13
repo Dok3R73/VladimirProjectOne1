@@ -11,7 +11,7 @@ public class Users {
 
     private static Connection connection;
 
-    private String firstName;
+    private static String firstName;
     private String middleName;
     private String lastName;
     private int id;
