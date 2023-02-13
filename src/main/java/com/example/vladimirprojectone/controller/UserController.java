@@ -3,11 +3,7 @@ package com.example.vladimirprojectone.controller;
 import com.example.vladimirprojectone.dto.UserCreateDto;
 import com.example.vladimirprojectone.entity.UserEntity;
 import com.example.vladimirprojectone.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,5 +25,24 @@ public class UserController {
     @GetMapping("/all")
     public List<UserEntity> findAll() {
         return userService.findAll();
+    }
+
+    @GetMapping("/valueId")
+    public String findId(@RequestParam long id) {
+        return userService.findId(id).toString();
+    }
+
+    @DeleteMapping("/delete")
+    public String delete(@RequestParam long id) {
+        return userService.deleteUser(id);
+    }
+
+    @PutMapping("/update")
+    public String update(@RequestBody UserCreateDto request, @RequestParam long id) {
+        return userService.update(request, id);
+    }
+    @GetMapping("/all/sorted")
+    public List<UserEntity> findAllSort(){
+        return userService.findAllSorted();
     }
 }
