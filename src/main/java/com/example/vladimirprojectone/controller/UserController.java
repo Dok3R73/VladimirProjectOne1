@@ -1,6 +1,7 @@
 package com.example.vladimirprojectone.controller;
 
 import com.example.vladimirprojectone.dto.UserCreateDto;
+import com.example.vladimirprojectone.dto.UserUpdateDto;
 import com.example.vladimirprojectone.entity.UserEntity;
 import com.example.vladimirprojectone.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -23,26 +24,27 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public List<UserEntity> findAll() {
+    public String findAll() {
         return userService.findAll();
     }
 
-    @GetMapping("/valueId")
-    public String findId(@RequestParam long id) {
-        return userService.findId(id).toString();
+    @GetMapping("/valueId/{id}")
+    public String findId(@PathVariable long id) {
+        return userService.findId(id);
     }
 
-    @DeleteMapping("/delete")
-    public String delete(@RequestParam long id) {
-        return userService.deleteUser(id);
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable long id) {
+        return userService.delete(id);
     }
 
-    @PutMapping("/update")
-    public String update(@RequestBody UserCreateDto request, @RequestParam long id) {
+    @PutMapping("/update/{id}")
+    public String update(@RequestBody UserUpdateDto request, @PathVariable long id) {
         return userService.update(request, id);
     }
+
     @GetMapping("/all/sorted")
-    public List<UserEntity> findAllSort(){
-        return userService.findAllSorted();
+    public String findAllSort() {
+        return userService.findAllSort();
     }
 }
