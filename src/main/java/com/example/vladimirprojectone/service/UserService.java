@@ -1,13 +1,13 @@
 package com.example.vladimirprojectone.service;
 
 import com.example.vladimirprojectone.dto.UserCreateDto;
+import com.example.vladimirprojectone.dto.UserUpdateDto;
 import com.example.vladimirprojectone.entity.UserEntity;
 import com.example.vladimirprojectone.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class UserService {
@@ -33,34 +33,61 @@ public class UserService {
                 savedUser.getLastName());
     }
 
-    public List<UserEntity> findAll() {
-        return userRepository.findAll();
+    public String findAll() {
+        List<UserEntity> list = userRepository.findAll();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (var user : list
+        ) {
+            stringBuilder.append(user.getId()).append(" - ").append(user.toString()).append("\n");
+        }
+        return stringBuilder.toString();
     }
 
-    public List<UserEntity> findAllSorted() {
+    public String findAllSort() {
         List<UserEntity> list = userRepository.findAll();
         list.sort(Comparator.comparing(UserEntity::getId));
-        return list;
+        StringBuilder stringBuilder = new StringBuilder();
+        for (var user : list
+        ) {
+            stringBuilder.append(user.getId()).append(" - ").append(user.toString()).append("\n");
+        }
+        return stringBuilder.toString();
     }
 
-    public UserEntity findId(long id) {
-        return userRepository.findById(id).orElse(null);
+    public String findId(long id) {
+        var user = userRepository.findById(id).orElse(null);
+
+        if (user == null) {
+            return "Пользователь не найден";
+        }
+
+        return user.toString();
     }
 
-    public String deleteUser(long id) {
-        userRepository.delete(Objects.requireNonNull(userRepository.findById(id).orElse(null)));
-        return "Пользователь с указанным id удален";
+    public String delete(long id) {
+        var user = userRepository.findById(id).orElse(null);
+
+        if (user == null) {
+            return "Пользователь не найден";
+        } else {
+            userRepository.delete(user);
+            return "Пользователь удален";
+        }
     }
 
-    public String update(UserCreateDto request, long id) {
+    public String update(UserUpdateDto request, long id) {
         UserEntity userEntity = userRepository.findById(id).orElse(null);
 
-        userEntity.setFirstName(request.getFirstName());
-        userEntity.setMiddleName(request.getMiddleName());
-        userEntity.setLastName(request.getLastName());
+        if (userEntity == null) {
+            return "Пользователь не найден";
+        } else {
+            userEntity.setFirstName(request.getFirstName());
+            userEntity.setMiddleName(request.getMiddleName());
+            userEntity.setLastName(request.getLastName());
 
-        userRepository.save(userEntity);
+            userRepository.save(userEntity);
 
-        return "Данные пользователя успешно изменены";
+            return "Данные пользователя успешно изменены";
+        }
     }
 }
