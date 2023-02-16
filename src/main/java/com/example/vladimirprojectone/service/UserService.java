@@ -1,11 +1,16 @@
 package com.example.vladimirprojectone.service;
 
-import com.example.vladimirprojectone.dto.UserCreateDto;
-import com.example.vladimirprojectone.dto.UserUpdateDto;
+import com.example.vladimirprojectone.dto.UserRequestDto;
+import com.example.vladimirprojectone.dto.UserResponseDto;
 import com.example.vladimirprojectone.entity.UserEntity;
+import com.example.vladimirprojectone.exception.BusinessException;
+import com.example.vladimirprojectone.mapper.UserMapper;
 import com.example.vladimirprojectone.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -13,81 +18,76 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
-    public String create(UserCreateDto request) {
-        UserEntity userEntity = new UserEntity();
+    public String create(UserRequestDto request) {
+        UserEntity userEntity = userMapper.userRequestConvert(request);
 
-        userEntity.setFirstName(request.getFirstName());
-        userEntity.setMiddleName(request.getMiddleName());
-        userEntity.setLastName(request.getLastName());
-
-        UserEntity savedUser = userRepository.save(userEntity);
+        save(userEntity);
 
         return String.format("Создан пользователь %s %s %s",
-                savedUser.getId(),
-                savedUser.getFirstName(),
-                savedUser.getLastName());
+                userEntity.getId(),
+                userEntity.getFirstName(),
+                userEntity.getLastName());
     }
 
-    public String findAll() {
-        List<UserEntity> list = userRepository.findAll();
-        StringBuilder stringBuilder = new StringBuilder();
-        for (var user : list
-        ) {
-            stringBuilder.append(user.getId()).append(" - ").append(user.toString()).append("\n");
+    public List<UserResponseDto> findAll() {
+        List<UserEntity> users = userRepository.findAll();
+
+        List<UserResponseDto> usersDto = new ArrayList<>();
+
+        for (UserEntity user : users) {
+            usersDto.add(userMapper.userEntityConvert(user));
         }
-        return stringBuilder.toString();
+        return usersDto;
     }
 
-    public String findAllSort() {
-        List<UserEntity> list = userRepository.findAll();
-        list.sort(Comparator.comparing(UserEntity::getId));
-        StringBuilder stringBuilder = new StringBuilder();
-        for (var user : list
-        ) {
-            stringBuilder.append(user.getId()).append(" - ").append(user.toString()).append("\n");
+    public List<UserResponseDto> findAllSort() {
+        List<UserEntity> users = userRepository.findAll();
+        users.sort(Comparator.comparing(UserEntity::getId));
+
+        List<UserResponseDto> usersDto = new ArrayList<>();
+
+        for (UserEntity user : users) {
+            usersDto.add(userMapper.userEntityConvert(user));
         }
-        return stringBuilder.toString();
+        return usersDto;
     }
 
-    public String findId(long id) {
-        var user = userRepository.findById(id).orElse(null);
+    public UserResponseDto findId(Long id) {
+        UserEntity user = findById(id);
 
-        if (user == null) {
-            return "Пользователь не найден";
-        }
-
-        return user.toString();
+        return userMapper.userEntityConvert(user);
     }
 
-    public String delete(long id) {
-        var user = userRepository.findById(id).orElse(null);
+    public String delete(Long id) {
+        UserEntity user = findById(id);
 
-        if (user == null) {
-            return "Пользователь не найден";
-        } else {
-            userRepository.delete(user);
-            return "Пользователь удален";
-        }
+        userRepository.delete(user);
+        return "Пользователь удален";
     }
 
-    public String update(UserUpdateDto request, long id) {
-        UserEntity userEntity = userRepository.findById(id).orElse(null);
+    public String update(UserRequestDto request, Long id) {
+        UserEntity userEntity = findById(id);
 
-        if (userEntity == null) {
-            return "Пользователь не найден";
-        } else {
-            userEntity.setFirstName(request.getFirstName());
-            userEntity.setMiddleName(request.getMiddleName());
-            userEntity.setLastName(request.getLastName());
+        userMapper.userUpdateRequest(userEntity, request);
 
-            userRepository.save(userEntity);
+        save(userEntity);
 
-            return "Данные пользователя успешно изменены";
-        }
+        return "Данные пользователя успешно изменены";
+    }
+
+    public void save(UserEntity userEntity) {
+        userRepository.save(userEntity);
+    }
+
+
+    public UserEntity findById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new BusinessException("Пользователь Не найден"));
     }
 }
