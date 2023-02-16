@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -37,26 +38,16 @@ public class UserService {
     }
 
     public List<UserResponseDto> findAll() {
-        List<UserEntity> users = userRepository.findAll();
-
-        List<UserResponseDto> usersDto = new ArrayList<>();
-
-        for (UserEntity user : users) {
-            usersDto.add(userMapper.userEntityConvert(user));
-        }
-        return usersDto;
+        return userRepository.findAll().stream()
+                .map(userMapper::userEntityConvert)
+                .collect(Collectors.toList());
     }
 
     public List<UserResponseDto> findAllSort() {
-        List<UserEntity> users = userRepository.findAll();
-        users.sort(Comparator.comparing(UserEntity::getId));
-
-        List<UserResponseDto> usersDto = new ArrayList<>();
-
-        for (UserEntity user : users) {
-            usersDto.add(userMapper.userEntityConvert(user));
-        }
-        return usersDto;
+        return userRepository.findAll().stream()
+                .map(userMapper::userEntityConvert)
+                .sorted(((o1, o2) -> o1.getId().compareTo(o2.getId())))
+                .collect(Collectors.toList());
     }
 
     public UserResponseDto findId(Long id) {
