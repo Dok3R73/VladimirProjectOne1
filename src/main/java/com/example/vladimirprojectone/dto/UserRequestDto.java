@@ -1,6 +1,6 @@
 package com.example.vladimirprojectone.dto;
 
-public class UserCreateDto {
+public class UserRequestDto {
 
     private String firstName;
     private String middleName;

@@ -1,15 +1,16 @@
 package com.example.vladimirprojectone.controller;
 
-import com.example.vladimirprojectone.dto.UserCreateDto;
-import com.example.vladimirprojectone.dto.UserUpdateDto;
-import com.example.vladimirprojectone.entity.UserEntity;
+import com.example.vladimirprojectone.dto.UserRequestDto;
+import com.example.vladimirprojectone.dto.UserResponseDto;
 import com.example.vladimirprojectone.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
+
 public class UserController {
 
     private final UserService userService;
@@ -19,32 +20,32 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String create(@RequestBody UserCreateDto request) {
+    public String create(@RequestBody UserRequestDto request) {
         return userService.create(request);
     }
 
     @GetMapping("/all")
-    public String findAll() {
+    public List<UserResponseDto> findAll() {
         return userService.findAll();
     }
 
-    @GetMapping("/valueId/{id}")
-    public String findId(@PathVariable long id) {
+    @GetMapping("/{id}")
+    public UserResponseDto findId(@PathVariable Long id) {
         return userService.findId(id);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable long id) {
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable Long id) {
         return userService.delete(id);
     }
 
-    @PutMapping("/update/{id}")
-    public String update(@RequestBody UserUpdateDto request, @PathVariable long id) {
+    @PutMapping("/{id}")
+    public String update(@RequestBody UserRequestDto request, @PathVariable Long id) {
         return userService.update(request, id);
     }
 
     @GetMapping("/all/sorted")
-    public String findAllSort() {
+    public List<UserResponseDto> findAllSort() {
         return userService.findAllSort();
     }
 }
