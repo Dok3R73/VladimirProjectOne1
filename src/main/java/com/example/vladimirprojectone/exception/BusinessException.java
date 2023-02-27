@@ -1,8 +1,16 @@
 package com.example.vladimirprojectone.exception;
 
+
 public class BusinessException extends RuntimeException {
 
-    public BusinessException(String message) {
+    private final HttpStatus httpStatus;
+
+    public BusinessException(String message, HttpStatus httpStatus) {
         super(message);
+        this.httpStatus = httpStatus;
+    }
+
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
     }
 }
