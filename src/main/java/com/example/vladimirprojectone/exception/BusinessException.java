@@ -1,7 +1,5 @@
 package com.example.vladimirprojectone.exception;
 
-import org.springframework.http.HttpStatus;
-
 
 public class BusinessException extends RuntimeException {
 
