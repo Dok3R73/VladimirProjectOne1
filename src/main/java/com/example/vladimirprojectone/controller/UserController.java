@@ -3,7 +3,6 @@ package com.example.vladimirprojectone.controller;
 import com.example.vladimirprojectone.dto.UserRequestDto;
 import com.example.vladimirprojectone.dto.UserResponseDto;
 import com.example.vladimirprojectone.service.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

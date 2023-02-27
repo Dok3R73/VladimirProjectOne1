@@ -21,12 +21,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    private static final List<String> BAD_NAMES = new ArrayList<>();
-
-    static {
-        BAD_NAMES.add("Петя");
-        BAD_NAMES.add("Вася");
-    }
 
     public UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
@@ -35,10 +29,6 @@ public class UserService {
 
     public String create(UserRequestDto request) {
         UserEntity userEntity = userMapper.toEntity(request);
-
-        if (!BAD_NAMES.contains(request.getFirstName())) {
-            throw new UserIncorrectDataException("Не может быть имя Петя", HttpStatus.BAD_REQUEST);
-        }
 
         save(userEntity);
 
@@ -86,5 +76,10 @@ public class UserService {
 
     public void save(UserEntity userEntity) {
         userRepository.save(userEntity);
+    }
+
+    public UserEntity findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("Пользователь не найден", HttpStatus.NOT_FOUND));
     }
 }
