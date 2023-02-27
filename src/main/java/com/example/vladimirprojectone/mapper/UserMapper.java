@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
-    public UserResponseDto userEntityConvert(UserEntity request) {
+    public UserResponseDto toDto(UserEntity request) {
         UserResponseDto userResponse = new UserResponseDto();
 
         userResponse.setId(request.getId());
@@ -19,7 +19,7 @@ public class UserMapper {
         return userResponse;
     }
 
-    public UserEntity userRequestConvert(UserRequestDto userRequestDto) {
+    public UserEntity toEntity(UserRequestDto userRequestDto) {
         UserEntity user = new UserEntity();
 
         user.setFirstName(userRequestDto.getFirstName());
@@ -29,7 +29,7 @@ public class UserMapper {
         return user;
     }
 
-    public void userUpdateRequest(UserEntity userEntity, UserRequestDto request) {
+    public void merge(UserEntity userEntity, UserRequestDto request) {
         if (request.getFirstName() != null) {
             userEntity.setFirstName(request.getFirstName());
         }
