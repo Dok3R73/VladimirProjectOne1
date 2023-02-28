@@ -7,7 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,17 +23,17 @@ public class UserEntity {
     private String lastName;
 
     @OneToMany(mappedBy = "user")
-    private List<Building> buildings;
+    private List<BuildingEntity> buildings;
 
     public UserEntity() {
 
     }
 
-    public List<Building> getBuildings() {
+    public List<BuildingEntity> getBuildings() {
         return buildings;
     }
 
-    public void setBuildings(List<Building> buildings) {
+    public void setBuildings(List<BuildingEntity> buildings) {
         this.buildings = buildings;
     }
 
