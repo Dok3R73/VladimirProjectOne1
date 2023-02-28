@@ -3,8 +3,6 @@ package com.example.vladimirprojectone.service;
 import com.example.vladimirprojectone.dto.UserRequestDto;
 import com.example.vladimirprojectone.dto.UserResponseDto;
 import com.example.vladimirprojectone.entity.UserEntity;
-import com.example.vladimirprojectone.exception.BusinessException;
-import com.example.vladimirprojectone.exception.user.UserIncorrectDataException;
 import com.example.vladimirprojectone.exception.user.UserNotFoundException;
 import com.example.vladimirprojectone.mapper.UserMapper;
 import com.example.vladimirprojectone.repository.UserRepository;
