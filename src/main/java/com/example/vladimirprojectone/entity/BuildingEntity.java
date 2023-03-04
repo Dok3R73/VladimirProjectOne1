@@ -65,13 +65,4 @@ public class BuildingEntity {
         this.user = user;
     }
 
-    @Override
-    public String toString() {
-        return "BuildingEntity{" +
-                "id=" + id +
-                ", address='" + address + '\'' +
-                ", area=" + area +
-                ", buildingType=" + buildingType +
-                '}';
-    }
 }
