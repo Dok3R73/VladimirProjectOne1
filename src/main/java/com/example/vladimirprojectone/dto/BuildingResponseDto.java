@@ -1,29 +1,16 @@
-package com.example.vladimirprojectone.entity;
+package com.example.vladimirprojectone.dto;
 
 import com.example.vladimirprojectone.entity.enums.BuildingType;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "building")
-public class BuildingEntity {
+public class BuildingResponseDto {
 
-    @Id
-    @SequenceGenerator(name = "idBuilding", sequenceName = "idBuildingSeq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idBuilding")
     private Long id;
 
     private String address;
     private BigDecimal area;
     private BuildingType buildingType;
-
-    @ManyToOne
-    private UserEntity user;
-
-    public BuildingEntity() {
-
-    }
 
     public Long getId() {
         return id;
@@ -57,12 +44,13 @@ public class BuildingEntity {
         this.buildingType = buildingType;
     }
 
-    public UserEntity getUser() {
-        return user;
+    @Override
+    public String toString() {
+        return "BuildingResponseDto{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", area=" + area +
+                ", buildingType=" + buildingType +
+                '}';
     }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
 }

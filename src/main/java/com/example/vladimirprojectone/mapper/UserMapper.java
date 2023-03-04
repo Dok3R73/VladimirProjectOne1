@@ -5,6 +5,8 @@ import com.example.vladimirprojectone.dto.UserResponseDto;
 import com.example.vladimirprojectone.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 public class UserMapper {
 
@@ -15,6 +17,10 @@ public class UserMapper {
         userResponse.setFirstName(request.getFirstName());
         userResponse.setMiddleName(request.getMiddleName());
         userResponse.setLastName(request.getLastName());
+
+        userResponse.setBuildingDtoList(request.getBuildings().stream()
+                .map(BuildingMapper::toDto)
+                .collect(Collectors.toList()));
 
         return userResponse;
     }
