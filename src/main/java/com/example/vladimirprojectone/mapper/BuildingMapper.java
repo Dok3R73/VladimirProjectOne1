@@ -30,6 +30,19 @@ public class BuildingMapper {
         buildingResponseDto.setBuildingType(request.getBuildingType());
         buildingResponseDto.setAddress(request.getAddress());
         buildingResponseDto.setArea(request.getArea());
+        buildingResponseDto.setUserName(request.getUser().getFirstName() + " " + request.getUser().getMiddleName() + " " + request.getUser().getLastName());
+
+        return buildingResponseDto;
+    }
+
+    public static BuildingResponseDto toDtoTableScore(BuildingEntity request) {
+        BuildingResponseDto buildingResponseDto = new BuildingResponseDto();
+
+        buildingResponseDto.setId(request.getId());
+        buildingResponseDto.setBuildingType(request.getBuildingType());
+        buildingResponseDto.setAddress(request.getAddress());
+        buildingResponseDto.setArea(request.getArea());
+        buildingResponseDto.setUserName(request.getUser().getFirstName() + " " + request.getUser().getMiddleName() + " " + request.getUser().getLastName());
 
         return buildingResponseDto;
     }

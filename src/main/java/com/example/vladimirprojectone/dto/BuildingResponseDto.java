@@ -11,6 +11,15 @@ public class BuildingResponseDto {
     private String address;
     private BigDecimal area;
     private BuildingType buildingType;
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public Long getId() {
         return id;
