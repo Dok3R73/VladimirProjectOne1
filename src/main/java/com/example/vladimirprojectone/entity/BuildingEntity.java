@@ -19,7 +19,6 @@ public class BuildingEntity {
     private BuildingType buildingType;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     public BuildingEntity() {

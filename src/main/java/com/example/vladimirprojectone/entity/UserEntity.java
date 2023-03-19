@@ -16,7 +16,8 @@ public class UserEntity {
     private String middleName;
     private String lastName;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id")
     private List<BuildingEntity> buildings;
 
     public UserEntity() {
