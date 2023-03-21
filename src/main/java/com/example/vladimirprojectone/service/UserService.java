@@ -6,6 +6,7 @@ import com.example.vladimirprojectone.entity.UserEntity;
 import com.example.vladimirprojectone.exception.user.UserNotFoundException;
 import com.example.vladimirprojectone.mapper.UserMapper;
 import com.example.vladimirprojectone.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class UserService {
 
@@ -25,6 +27,8 @@ public class UserService {
     }
 
     public String create(UserRequestDto request) {
+        log.info("Заспрос на создание пользователя {}", request);
+
         UserEntity userEntity = userMapper.toEntity(request);
 
         save(userEntity);
@@ -55,6 +59,8 @@ public class UserService {
     }
 
     public String delete(Long id) {
+        log.info("Заспрос на удаление пользователя {}", id);
+
         UserEntity user = findById(id);
 
         userRepository.delete(user);
@@ -62,6 +68,8 @@ public class UserService {
     }
 
     public String update(UserRequestDto request, Long id) {
+        log.info("Заспрос на обновление данных пользователя {}{}", request, id);
+
         UserEntity userEntity = findById(id);
 
         userMapper.merge(userEntity, request);

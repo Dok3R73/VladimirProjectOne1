@@ -7,12 +7,14 @@ import com.example.vladimirprojectone.entity.UserEntity;
 import com.example.vladimirprojectone.exception.building.BuildingNotFoundException;
 import com.example.vladimirprojectone.mapper.BuildingMapper;
 import com.example.vladimirprojectone.repository.BuildingRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class BuildingService {
 
@@ -27,6 +29,8 @@ public class BuildingService {
     }
 
     public String create(BuildingRequestDto requestDto) {
+        log.info("Заспрос на создание недвижимости {}", requestDto);
+
         UserEntity userEntity = userService.findById(requestDto.getUserId());
 
         BuildingEntity buildingEntity = buildingMapper.toEntity(requestDto, userEntity);
@@ -49,6 +53,8 @@ public class BuildingService {
     }
 
     public String delete(Long id) {
+        log.info("Запрос на удаление недвижимости {}", id);
+
         BuildingEntity build = findById(id);
 
         build.getUser().getBuildings().remove(build);
