@@ -20,29 +20,14 @@ public class BuildingMapper {
         return buildingEntity;
     }
 
-    public static BuildingResponseDto toDto(BuildingEntity request) {
+    public static BuildingResponseDto toDto(BuildingEntity entity) {
         BuildingResponseDto buildingResponseDto = new BuildingResponseDto();
 
-        buildingResponseDto.setId((long) request.getUser()
-                .getBuildings()
-                .indexOf(request));
-
-        buildingResponseDto.setBuildingType(request.getBuildingType());
-        buildingResponseDto.setAddress(request.getAddress());
-        buildingResponseDto.setArea(request.getArea());
-        buildingResponseDto.setUserName(request.getUser().getFirstName() + " " + request.getUser().getMiddleName() + " " + request.getUser().getLastName());
-
-        return buildingResponseDto;
-    }
-
-    public static BuildingResponseDto toDtoTableScore(BuildingEntity request) {
-        BuildingResponseDto buildingResponseDto = new BuildingResponseDto();
-
-        buildingResponseDto.setId(request.getId());
-        buildingResponseDto.setBuildingType(request.getBuildingType());
-        buildingResponseDto.setAddress(request.getAddress());
-        buildingResponseDto.setArea(request.getArea());
-        buildingResponseDto.setUserName(request.getUser().getFirstName() + " " + request.getUser().getMiddleName() + " " + request.getUser().getLastName());
+        buildingResponseDto.setId(entity.getId());
+        buildingResponseDto.setBuildingType(entity.getBuildingType());
+        buildingResponseDto.setAddress(entity.getAddress());
+        buildingResponseDto.setArea(entity.getArea());
+        buildingResponseDto.setUserName(entity.getUser().getFirstName() + " " + entity.getUser().getMiddleName() + " " + entity.getUser().getLastName());
 
         return buildingResponseDto;
     }

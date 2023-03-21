@@ -44,7 +44,7 @@ public class BuildingService {
 
     public List<BuildingResponseDto> findAll() {
         return buildingRepository.findAll().stream()
-                .map(BuildingMapper::toDtoTableScore)
+                .map(BuildingMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -68,6 +68,6 @@ public class BuildingService {
     public BuildingResponseDto findId(Long id) {
         BuildingEntity building = findById(id);
 
-        return BuildingMapper.toDtoTableScore(building);
+        return BuildingMapper.toDto(building);
     }
 }
