@@ -72,7 +72,7 @@ public class UserService {
 
         UserEntity userEntity = findById(id);
 
-        userMapper.merge(userEntity, request);
+        userMapper.updateUser(userEntity, request);
 
         save(userEntity);
 

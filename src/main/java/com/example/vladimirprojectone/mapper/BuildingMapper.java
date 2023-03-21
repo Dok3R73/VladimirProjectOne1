@@ -10,25 +10,21 @@ import org.springframework.stereotype.Component;
 public class BuildingMapper {
 
     public BuildingEntity toEntity(BuildingRequestDto requestDto, UserEntity userEntity) {
-        BuildingEntity buildingEntity = new BuildingEntity();
-
-        buildingEntity.setUser(userEntity);
-        buildingEntity.setAddress(requestDto.getAddress());
-        buildingEntity.setArea(requestDto.getArea());
-        buildingEntity.setBuildingType(requestDto.getBuildingType());
-
-        return buildingEntity;
+        return BuildingEntity.builder()
+                .user(userEntity)
+                .address(requestDto.getAddress())
+                .area(requestDto.getArea())
+                .buildingType(requestDto.getBuildingType())
+                .build();
     }
 
     public static BuildingResponseDto toDto(BuildingEntity entity) {
-        BuildingResponseDto buildingResponseDto = new BuildingResponseDto();
-
-        buildingResponseDto.setId(entity.getId());
-        buildingResponseDto.setBuildingType(entity.getBuildingType());
-        buildingResponseDto.setAddress(entity.getAddress());
-        buildingResponseDto.setArea(entity.getArea());
-        buildingResponseDto.setUserName(entity.getUser().getFirstName() + " " + entity.getUser().getMiddleName() + " " + entity.getUser().getLastName());
-
-        return buildingResponseDto;
+        return BuildingResponseDto.builder()
+                .id(entity.getId())
+                .buildingType(entity.getBuildingType())
+                .address(entity.getAddress())
+                .area(entity.getArea())
+                .userName(entity.getUser().toString())
+                .build();
     }
 }

@@ -10,32 +10,27 @@ import java.util.stream.Collectors;
 @Component
 public class UserMapper {
 
-    public UserResponseDto toDto(UserEntity request) {
-        UserResponseDto userResponse = new UserResponseDto();
-
-        userResponse.setId(request.getId());
-        userResponse.setFirstName(request.getFirstName());
-        userResponse.setMiddleName(request.getMiddleName());
-        userResponse.setLastName(request.getLastName());
-
-        userResponse.setBuildingDtoList(request.getBuildings().stream()
-                .map(BuildingMapper::toDto)
-                .collect(Collectors.toList()));
-
-        return userResponse;
+    public UserResponseDto toDto(UserEntity entity) {
+        return UserResponseDto.builder()
+                .id(entity.getId())
+                .firstName(entity.getFirstName())
+                .middleName(entity.getMiddleName())
+                .lastName(entity.getLastName())
+                .buildings(entity.getBuildings().stream()
+                        .map(BuildingMapper::toDto)
+                        .collect(Collectors.toList()))
+                .build();
     }
 
-    public UserEntity toEntity(UserRequestDto userRequestDto) {
-        UserEntity user = new UserEntity();
-
-        user.setFirstName(userRequestDto.getFirstName());
-        user.setMiddleName(userRequestDto.getMiddleName());
-        user.setLastName(userRequestDto.getLastName());
-
-        return user;
+    public UserEntity toEntity(UserRequestDto request) {
+        return UserEntity.builder()
+                .firstName(request.getFirstName())
+                .middleName(request.getMiddleName())
+                .lastName(request.getLastName())
+                .build();
     }
 
-    public void merge(UserEntity userEntity, UserRequestDto request) {
+    public void updateUser(UserEntity userEntity, UserRequestDto request) {
         if (request.getFirstName() != null) {
             userEntity.setFirstName(request.getFirstName());
         }

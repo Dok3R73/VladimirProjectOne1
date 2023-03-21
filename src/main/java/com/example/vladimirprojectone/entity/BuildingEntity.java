@@ -1,8 +1,7 @@
 package com.example.vladimirprojectone.entity;
 
 import com.example.vladimirprojectone.entity.enums.BuildingType;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,6 +10,9 @@ import java.math.BigDecimal;
 @Table(name = "building")
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BuildingEntity {
 
     @Id
@@ -25,7 +27,4 @@ public class BuildingEntity {
     @ManyToOne
     private UserEntity user;
 
-    public BuildingEntity() {
-
-    }
 }
