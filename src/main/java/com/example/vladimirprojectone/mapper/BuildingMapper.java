@@ -10,40 +10,21 @@ import org.springframework.stereotype.Component;
 public class BuildingMapper {
 
     public BuildingEntity toEntity(BuildingRequestDto requestDto, UserEntity userEntity) {
-        BuildingEntity buildingEntity = new BuildingEntity();
-
-        buildingEntity.setUser(userEntity);
-        buildingEntity.setAddress(requestDto.getAddress());
-        buildingEntity.setArea(requestDto.getArea());
-        buildingEntity.setBuildingType(requestDto.getBuildingType());
-
-        return buildingEntity;
+        return BuildingEntity.builder()
+                .user(userEntity)
+                .address(requestDto.getAddress())
+                .area(requestDto.getArea())
+                .buildingType(requestDto.getBuildingType())
+                .build();
     }
 
-    public static BuildingResponseDto toDto(BuildingEntity request) {
-        BuildingResponseDto buildingResponseDto = new BuildingResponseDto();
-
-        buildingResponseDto.setId((long) request.getUser()
-                .getBuildings()
-                .indexOf(request));
-
-        buildingResponseDto.setBuildingType(request.getBuildingType());
-        buildingResponseDto.setAddress(request.getAddress());
-        buildingResponseDto.setArea(request.getArea());
-        buildingResponseDto.setUserName(request.getUser().getFirstName() + " " + request.getUser().getMiddleName() + " " + request.getUser().getLastName());
-
-        return buildingResponseDto;
-    }
-
-    public static BuildingResponseDto toDtoTableScore(BuildingEntity request) {
-        BuildingResponseDto buildingResponseDto = new BuildingResponseDto();
-
-        buildingResponseDto.setId(request.getId());
-        buildingResponseDto.setBuildingType(request.getBuildingType());
-        buildingResponseDto.setAddress(request.getAddress());
-        buildingResponseDto.setArea(request.getArea());
-        buildingResponseDto.setUserName(request.getUser().getFirstName() + " " + request.getUser().getMiddleName() + " " + request.getUser().getLastName());
-
-        return buildingResponseDto;
+    public static BuildingResponseDto toDto(BuildingEntity entity) {
+        return BuildingResponseDto.builder()
+                .id(entity.getId())
+                .buildingType(entity.getBuildingType())
+                .address(entity.getAddress())
+                .area(entity.getArea())
+                .userName(entity.getUser().toString())
+                .build();
     }
 }
