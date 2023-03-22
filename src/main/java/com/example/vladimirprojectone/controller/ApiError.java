@@ -1,13 +1,11 @@
 package com.example.vladimirprojectone.controller;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 public class ApiError {
 
     private String message;
